@@ -26,6 +26,10 @@
     global $DB, $OUTPUT;
     $marks = $DB->get_records('local_marksheet');
 
+    foreach($marks as $mark) {
+        array_push($totalMarks, $mark->cq_mark + $mark->mcq_mark);
+    }
+
     // Data to be passed in the manage template.
     $templatecontext = (object) [
         'texttodisplay' => array_values($marks),
