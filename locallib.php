@@ -72,7 +72,7 @@ function local_marksheet_edit_record(edit_form $mform, int $id = null) {
         //Back to manage.php
         redirect(new moodle_url('/local/marksheet/manage.php'), get_string('cancel_form', 'local_marksheet'));
     } else if (!$mform->is_validated()) {
-        //$mform->addElementError('cq_mark', 'Name is required');
+        
     }
     else if ($fromform = $mform->get_data()) {
         // Handing the form data.
