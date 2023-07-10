@@ -50,6 +50,7 @@ class edit_form extends moodleform {
         $mform->addElement('text', 'subject_name', get_string('subject_name', 'local_marksheet'));
         $mform->setType('subject_name', PARAM_TEXT);
         $mform->setDefault('subject_name', $this->data->subject_name ?? "");
+        $mform->addRule('subject_name', get_string('err_required', 'local_marksheet'), 'required', null, 'client');
 
         $mform->addElement('text', 'cq_mark', get_string('cq_mark', 'local_marksheet'));
         $mform->setType('cq_mark', PARAM_INT);
@@ -60,5 +61,17 @@ class edit_form extends moodleform {
         $mform->setDefault('mcq_mark', $this->data->mcq_mark ?? "");
 
         $this->add_action_buttons();
+    }
+
+    //Custom validation should be added here
+    function validation($data, $files) {
+        $errors = array();
+        if ($data['cq_mark'] < 0 || $data['cq_mark'] > 70){
+            $errors['err_cq_limit'] = get_string('err_cq_limit', 'local_marksheet');
+        } 
+        if ($data['mcq_mark'] < 0 || $data['mcq_mark'] > 30){
+            $errors['err_mcq_limit'] = get_string('err_mcq_limit', 'local_marksheet');
+        } 
+        return $errors;
     }
 }

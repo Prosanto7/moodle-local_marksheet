@@ -26,13 +26,23 @@
     global $DB, $OUTPUT;
     $marks = $DB->get_records('local_marksheet');
 
+    $sumCQ = 0;
+    $sumMCQ = 0;
+    $sumTotal = 0;
+
     foreach($marks as $mark) {
         $mark->total = $mark->cq_mark + $mark->mcq_mark;
+        $sumCQ += $mark->cq_mark;
+        $sumMCQ += $mark->mcq_mark;
+        $sumTotal += $mark->total;
     }
 
     // Data to be passed in the manage template.
     $templatecontext = (object) [
         'texttodisplay' => array_values($marks),
+        'avgCQ' => ($sumCQ / count($marks)),
+        'avgMCQ' => ($sumMCQ / count($marks)),
+        'avgTotal' => ($sumTotal / count($marks)),
         'editurl' => new moodle_url('/local/marksheet/edit.php'),
         'deleteurl' => new moodle_url('/local/marksheet/delete.php'),
     ];
@@ -55,11 +65,16 @@ function local_marksheet_init_form(int $id = null): edit_form {
 }
 
 function local_marksheet_edit_record(edit_form $mform, int $id = null) {
+
     global $DB;
+    
     if ($mform->is_cancelled()) {
         //Back to manage.php
         redirect(new moodle_url('/local/marksheet/manage.php'), get_string('cancel_form', 'local_marksheet'));
-    } else if ($fromform = $mform->get_data()) {
+    } else if (!$mform->is_validated()) {
+        //$mform->addElementError('cq_mark', 'Name is required');
+    }
+    else if ($fromform = $mform->get_data()) {
         // Handing the form data.
         $recordstoinsert = new stdClass();
         $recordstoinsert->subject_name = $fromform->subject_name;
@@ -79,7 +94,7 @@ function local_marksheet_edit_record(edit_form $mform, int $id = null) {
             // Go back to manage page.
             redirect(new moodle_url('/local/marksheet/manage.php'), get_string('insertthanks', 'local_marksheet'));
         }
-    }
+    } 
 }
 
 function local_marksheet_delete_record($id) {

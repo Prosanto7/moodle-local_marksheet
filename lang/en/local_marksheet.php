@@ -37,3 +37,5 @@ $string['deletescore'] = "Delete Scores";
 $string['deletetitle'] = "Confirm Delete";
 $string['modalmessage'] = "Do you really want to delete this amazing score?";
 $string['delete'] = "Delete";
+$string['err_required']='You must supply a value here.';
+$string['err_cq_limit']='CQ marks can be 0 to 70';
