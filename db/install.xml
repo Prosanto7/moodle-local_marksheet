@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/marksheet/db" VERSION="2023071000" COMMENT="XMLDB file for Moodle local/marksheet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="local_marksheet" COMMENT="This table saves information about subject and mark of a student">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="subject_name" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="The name of the subject"/>
+        <FIELD NAME="cq_mark" TYPE="int" LENGTH="3" DEFAULT="0" NOTNULL="true" SEQUENCE="false" COMMENT="The mark obtained in choice question"/>
+        <FIELD NAME="mcq_mark" TYPE="int" LENGTH="3" DEFAULT="0" NOTNULL="true" SEQUENCE="false" COMMENT="The mark obtained in multiple choice question"/>
+
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="The unique id for this table"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>
