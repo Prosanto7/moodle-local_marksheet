@@ -22,8 +22,24 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+ $functions = array(
+    'local_marksheet_delete_mark_by_id' => array(
+        'classname'   => 'local_marksheet_external',
+        'methodname'  => 'delete_mark_by_id',
+        'classpath'   => 'local/marksheet/classes/external.php',
+        'description' => 'Delete a single record by id',
+        'type'        => 'write',
+        'ajax'        => true
+    )
+);
 
-$plugin->component = 'local_marksheet'; // Full name of the plugin (used for diagnostics).
-$plugin->version  = 2023071001;    // The current module version (Date: YYYYMMDDXX).
-$plugin->requires = 2021051704;    // Requires this Moodle version.
+$services = array (
+    'Custom Web Services' => array (
+        'functions' => array (
+            'local_marksheet_delete_mark_by_id'
+        ),
+        'restrictedusers' => 0,
+        'enabled' => 1,
+        'shortname' => 'custom_web_services'
+    )
+);
