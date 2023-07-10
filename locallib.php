@@ -34,6 +34,7 @@
     $templatecontext = (object) [
         'texttodisplay' => array_values($marks),
         'editurl' => new moodle_url('/local/marksheet/edit.php'),
+        'deleteurl' => new moodle_url('/local/marksheet/delete.php'),
     ];
 
     echo $OUTPUT->render_from_template('local_marksheet/manage', $templatecontext);
@@ -51,4 +52,45 @@ function local_marksheet_init_form(int $id = null): edit_form {
         $mform = new edit_form($actionurl);
     }
     return $mform;
+}
+
+function local_marksheet_edit_record(edit_form $mform, int $id = null) {
+    global $DB;
+    if ($mform->is_cancelled()) {
+        //Back to manage.php
+        redirect(new moodle_url('/local/marksheet/manage.php'), get_string('cancel_form', 'local_marksheet'));
+    } else if ($fromform = $mform->get_data()) {
+        // Handing the form data.
+        $recordstoinsert = new stdClass();
+        $recordstoinsert->subject_name = $fromform->subject_name;
+        $recordstoinsert->cq_mark = $fromform->cq_mark;
+        $recordstoinsert->mcq_mark = $fromform->mcq_mark;
+
+        if ($fromform->id) {
+            // Update the record.
+            $recordstoinsert->id = $fromform->id;
+            $DB->update_record('local_marksheet', $recordstoinsert);
+            // Go back to manage page.
+            redirect(new moodle_url('/local/marksheet/manage.php'), get_string('updatethanks', 'local_marksheet'));
+
+        } else {
+            // Insert the record.
+            $DB->insert_record('local_marksheet', $recordstoinsert);
+            // Go back to manage page.
+            redirect(new moodle_url('/local/marksheet/manage.php'), get_string('insertthanks', 'local_marksheet'));
+        }
+    }
+}
+
+function local_marksheet_delete_record($id) {
+    global $DB;
+    try {
+        // Delete the record.
+        $DB->delete_records('local_marksheet', array('id' => $id));
+
+        // Go back to manage page.
+        redirect(new moodle_url('/local/marksheet/manage.php'), get_string('deletemessage', 'local_marksheet'));
+    } catch (Exception $exception) {
+        throw new moodle_exception($exception);
+    }
 }

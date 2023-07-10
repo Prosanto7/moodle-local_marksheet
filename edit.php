@@ -34,7 +34,7 @@
 
  $mform = local_marksheet_init_form($id);
 
-// local_footballscore_edit_score($mform, $id);
+ local_marksheet_edit_record($mform, $id);
 
 echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('createoredit', 'local_marksheet'));

@@ -21,19 +21,9 @@
  * @copyright  2023, Prosanto Deb <prosanto.deb@brainstation-23.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+ 
+ require_once(__DIR__.'/../../config.php');
+ require_once('./locallib.php');
 
-$string['pluginname'] = 'Mark Sheet';
-$string['id'] = 'ID';
-$string['subject_name'] = 'Enter name of your subject';
-$string['cq_mark'] = 'Enter marks obtained in CQ';
-$string['mcq_mark'] = 'Enter marks obtained in MCQ';
-$string['createoredit'] = 'Create or Edit a Entry';
-$string['cancel_form'] = 'You cancelled the form action';
-$string['updatethanks'] = 'Thanks for updating a record';
-$string['insertthanks'] = 'Thanks for inserting a record';
-$string['deletemessage'] = "The record was deleted successfully!";
-$string['managepagetitle'] = "Manage student marks";
-$string['deletescore'] = "Delete Scores";
-$string['deletetitle'] = "Confirm Delete";
-$string['modalmessage'] = "Do you really want to delete this amazing score?";
-$string['delete'] = "Delete";
+ $id = optional_param('id', 0, PARAM_INT);
+ local_marksheet_delete_record($id);
