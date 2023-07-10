@@ -24,10 +24,9 @@
 
 $string['pluginname'] = 'Mark Sheet';
 $string['id'] = 'ID';
-$string['team1'] = 'Name of Team 1: ';
-$string['goal1'] = 'Goals scored by Team 1: ';
-$string['team2'] = 'Name of Team 2: ';
-$string['goal2'] = 'Goals scored by Team 2: ';
+$string['subject_name'] = 'Enter name of your subject';
+$string['cq_mark'] = 'Enter marks obtained in CQ';
+$string['mcq_mark'] = 'Enter marks obtained in MCQ';
 $string['createoredit'] = 'Create or Edit a Entry';
 $string['updatethanks'] = 'Thanks for updating a record';
 $string['insertthanks'] = 'Thanks for inserting a record';

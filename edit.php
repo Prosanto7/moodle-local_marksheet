@@ -21,34 +21,25 @@
  * @copyright  2023, Prosanto Deb <prosanto.deb@brainstation-23.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+ 
+ require_once(__DIR__.'/../../config.php');
+ require_once('./locallib.php');
+ require_once($CFG->dirroot.'/local/marksheet/classes/form/edit_form.php');
 
- function local_marksheet_display_marks() {
-    global $DB, $OUTPUT;
-    $marks = $DB->get_records('local_marksheet');
+ 
+ $id = optional_param('id', 0, PARAM_INT);
+ $PAGE->set_url(new moodle_url('/local/marksheet/edit.php', array('id' => $id)));
+ $PAGE->set_context(\context_system::instance());
+ $PAGE->set_title(get_string('createoredit', 'local_marksheet'));
 
-    foreach($marks as $mark) {
-        $mark->total = $mark->cq_mark + $mark->mcq_mark;
-    }
+ $mform = local_marksheet_init_form($id);
 
-    // Data to be passed in the manage template.
-    $templatecontext = (object) [
-        'texttodisplay' => array_values($marks),
-        'editurl' => new moodle_url('/local/marksheet/edit.php'),
-    ];
+// local_footballscore_edit_score($mform, $id);
 
-    echo $OUTPUT->render_from_template('local_marksheet/manage', $templatecontext);
-}
+echo $OUTPUT->header();
+echo $OUTPUT->heading(get_string('createoredit', 'local_marksheet'));
 
-function local_marksheet_init_form(int $id = null): edit_form {
-    global $DB;
+echo "<div class='mt-5'></div>";
+$mform->display();
 
-    $actionurl = new moodle_url('/local/marksheet/edit.php');
-
-    if ($id) {
-        $mark = $DB->get_record('local_marksheet', array('id' => $id));
-        $mform = new edit_form($actionurl, $mark);
-    } else {
-        $mform = new edit_form($actionurl);
-    }
-    return $mform;
-}
+echo $OUTPUT->footer();
