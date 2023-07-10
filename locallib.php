@@ -27,7 +27,7 @@
     $marks = $DB->get_records('local_marksheet');
 
     foreach($marks as $mark) {
-        array_push($totalMarks, $mark->cq_mark + $mark->mcq_mark);
+        $mark->total = $mark->cq_mark + $mark->mcq_mark;
     }
 
     // Data to be passed in the manage template.
