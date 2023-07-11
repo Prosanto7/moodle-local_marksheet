@@ -32,5 +32,6 @@
  
  echo $OUTPUT->header();
  echo $OUTPUT->heading(get_string('pluginname', 'local_marksheet'));
+ $PAGE->requires->js_call_amd('local_marksheet/confirmdelete', 'init', array());
  local_marksheet_display_marks();
  echo $OUTPUT->footer();

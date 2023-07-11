@@ -40,9 +40,9 @@
     // Data to be passed in the manage template.
     $templatecontext = (object) [
         'texttodisplay' => array_values($marks),
-        'avgCQ' => ($sumCQ / count($marks)),
-        'avgMCQ' => ($sumMCQ / count($marks)),
-        'avgTotal' => ($sumTotal / count($marks)),
+        'avgCQ' => round(($sumCQ / count($marks)), 2),
+        'avgMCQ' => round(($sumMCQ / count($marks)), 2),
+        'avgTotal' => round(($sumTotal / count($marks)), 2),
         'editurl' => new moodle_url('/local/marksheet/edit.php'),
         'deleteurl' => new moodle_url('/local/marksheet/delete.php'),
     ];
